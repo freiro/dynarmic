@@ -116,8 +116,6 @@ bool Inst::WritesToCPSR() const {
     case Opcode::SetVFlag:
     case Opcode::OrQFlag:
     case Opcode::SetGEFlags:
-    case Opcode::FPCompare32:
-    case Opcode::FPCompare64:
         return true;
 
     default:
