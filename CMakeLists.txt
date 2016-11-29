@@ -30,8 +30,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 # Compiler flags
 if (MSVC)
     IF (${CMAKE_CXX_COMPILER_ID}  MATCHES "Clang")
-        add_compile_options(-Xclang -fno-operator-names -Qunused-arguments -Xclang -Wno-missing-braces  -Xclang -Wno-expansion-to-defined)
-	ENDIF()
+        add_compile_options(-Xclang -fno-operator-names -Qunused-arguments -Xclang 
+                            -Wno-missing-braces  -Xclang -Wno-expansion-to-defined)
+    ENDIF()
     add_compile_options(/W3
                         /w34456 # Declaration of 'var' hides previous local declaration
                         /w34457 # Declaration of 'var' hides function parameter
