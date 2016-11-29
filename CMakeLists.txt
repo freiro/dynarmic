@@ -7,8 +7,11 @@ option(DYNARMIC_USE_LLVM "Support disassembly of jitted x86_64 code using LLVM" 
 option(DYNARMIC_TESTS "Build tests" ON)
 
 # Set hard requirements for C++
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+IF (NOT (WIN32 AND (${CMAKE_CXX_COMPILER_ID}  MATCHES "Clang"))) 
+    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ENDIF()
+
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Warn on CMake API deprecations
@@ -26,6 +29,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 # Compiler flags
 if (MSVC)
+    IF (${CMAKE_CXX_COMPILER_ID}  MATCHES "Clang")
+        add_compile_options(-Xclang -fno-operator-names -Qunused-arguments -Xclang -Wno-missing-braces  -Xclang -Wno-expansion-to-defined)
+	ENDIF()
     add_compile_options(/W3
                         /w34456 # Declaration of 'var' hides previous local declaration
                         /w34457 # Declaration of 'var' hides function parameter
@@ -105,3 +111,12 @@ add_subdirectory(src)
 if (DYNARMIC_TESTS)
     add_subdirectory(tests)
 endif()
+message(STATUS "2. CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}...")
+message(STATUS "CMAKE_C_FLAGS_RELEASE: ${CMAKE_C_FLAGS_RELEASE}...")
+message(STATUS "CMAKE_C_FLAGS_DEBUG: ${CMAKE_C_FLAGS_DEBUG}...")
+message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}...")
+message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}...")
+message(STATUS "CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}...")
+message(STATUS "CMAKE_EXE_LINKER_FLAGS: ${CMAKE_EXE_LINKER_FLAGS}...")
+message(STATUS "CMAKE_EXE_LINKER_FLAGS_RELEASE: ${CMAKE_EXE_LINKER_FLAGS_RELEASE}...")
+message(STATUS "CMAKE_EXE_LINKER_FLAGS_DEBUG: ${CMAKE_EXE_LINKER_FLAGS_DEBUG}...")
