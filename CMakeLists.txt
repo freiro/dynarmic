@@ -7,7 +7,7 @@ option(DYNARMIC_USE_LLVM "Support disassembly of jitted x86_64 code using LLVM" 
 option(DYNARMIC_TESTS "Build tests" ON)
 
 # Set hard requirements for C++
-IF (NOT (WIN32 AND (${CMAKE_CXX_COMPILER_ID}  MATCHES "Clang"))) 
+IF (NOT ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND "${CMAKE_CXX_SIMULATE_ID}" STREQUAL "MSVC")) 
     set(CMAKE_CXX_STANDARD 14)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ENDIF()
